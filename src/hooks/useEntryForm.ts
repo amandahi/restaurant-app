@@ -1,9 +1,18 @@
 import { useState } from 'react'
+import { PHOTOS_BUCKET, supabase } from '../lib/supabaseClient'
 import { restaurantService } from '../services/restaurantService'
 import type { Dish, RestaurantEntry, VisitTag } from '../types/restaurant'
 
 function today(): string {
   return new Date().toISOString().slice(0, 10)
+}
+
+async function uploadPhoto(file: File): Promise<string> {
+  const path = `${crypto.randomUUID()}-${file.name}`
+  const { error } = await supabase.storage.from(PHOTOS_BUCKET).upload(path, file)
+  if (error) throw error
+  const { data } = supabase.storage.from(PHOTOS_BUCKET).getPublicUrl(path)
+  return data.publicUrl
 }
 
 export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
@@ -14,7 +23,8 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
   const [notes, setNotes] = useState('')
   const [fullReview, setFullReview] = useState('')
   const [tags, setTags] = useState<VisitTag[]>([])
-  const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined)
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | undefined>(undefined)
   const [submitting, setSubmitting] = useState(false)
 
   function addDish(name: string) {
@@ -31,8 +41,9 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
   }
 
   function setPhoto(file: File | null) {
-    if (photoUrl) URL.revokeObjectURL(photoUrl)
-    setPhotoUrl(file ? URL.createObjectURL(file) : undefined)
+    if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl)
+    setPhotoFile(file)
+    setPhotoPreviewUrl(file ? URL.createObjectURL(file) : undefined)
   }
 
   const isValid = restaurantName.trim().length > 0 && visitDate.length > 0
@@ -41,6 +52,7 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
     if (!isValid) return null
     setSubmitting(true)
     try {
+      const photoUrl = photoFile ? await uploadPhoto(photoFile) : undefined
       const entry = await restaurantService.create({
         restaurantName: restaurantName.trim(),
         visitDate,
@@ -74,7 +86,7 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
     setFullReview,
     tags,
     toggleTag,
-    photoUrl,
+    photoUrl: photoPreviewUrl,
     setPhoto,
     isValid,
     submitting,
