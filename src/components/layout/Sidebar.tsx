@@ -10,8 +10,8 @@ export function Sidebar() {
   return (
     <aside className="hidden shrink-0 border-r border-stone-200 bg-white md:flex md:w-64 md:flex-col md:py-6">
       <div className="px-6 pb-6">
-        <h1 className="text-xl font-semibold text-stone-900">Bite Log</h1>
-        <p className="mt-1 text-sm text-stone-400">Your restaurant journal</p>
+        <h1 className="text-xl font-semibold text-stone-900">Restaurant Journal</h1>
+        <p className="mt-1 text-sm text-stone-400">Track every meal worth remembering</p>
       </div>
       <nav className="flex flex-col gap-1 px-3">
         <NavLink to="/" end className={linkClass}>

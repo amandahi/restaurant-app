@@ -10,7 +10,7 @@ const TITLES: Record<string, string> = {
 
 export function AppShell() {
   const location = useLocation()
-  const title = TITLES[location.pathname] ?? 'Bite Log'
+  const title = TITLES[location.pathname] ?? 'Restaurant Journal'
 
   return (
     <div className="flex min-h-svh flex-col bg-white md:flex-row md:bg-stone-50">
