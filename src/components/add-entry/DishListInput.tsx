@@ -30,12 +30,12 @@ export function DishListInput({ dishes, onAdd, onRemove }: DishListInputProps) {
             }
           }}
           placeholder="Add a dish..."
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
         />
         <button
           type="button"
           onClick={handleAdd}
-          className="shrink-0 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white touch-manipulation"
+          className="shrink-0 rounded-lg bg-stone-700 px-4 py-2 text-sm font-medium text-white touch-manipulation"
         >
           Add
         </button>
@@ -45,7 +45,7 @@ export function DishListInput({ dishes, onAdd, onRemove }: DishListInputProps) {
           {dishes.map((dish) => (
             <span
               key={dish.id}
-              className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+              className="inline-flex items-center gap-1 rounded-full bg-stone-100 px-3 py-1 text-sm text-stone-600"
             >
               {dish.name}
               <button

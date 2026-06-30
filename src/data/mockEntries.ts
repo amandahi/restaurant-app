@@ -1,5 +1,9 @@
 import type { RestaurantEntry } from '../types/restaurant'
 
+function dishPhoto(unsplashId: string): string {
+  return `https://images.unsplash.com/photo-${unsplashId}?w=400&h=300&fit=crop&q=80`
+}
+
 export const mockEntries: RestaurantEntry[] = [
   {
     id: '1a2b3c4d-0001-4000-8000-000000000001',
@@ -12,7 +16,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 5,
     notes: 'Best pasta in the city. Ask for extra black pepper.',
     tags: ['date_night', 'special_occasion'],
-    photoUrl: 'https://picsum.photos/seed/nonna-rosa/400/300',
+    photoUrl: dishPhoto('1551183053-bf91a1d81141'),
     createdAt: '2026-06-20T19:32:00.000Z',
   },
   {
@@ -22,8 +26,8 @@ export const mockEntries: RestaurantEntry[] = [
     dishes: [{ id: 'd3', name: 'Al Pastor Tacos' }],
     rating: 4,
     notes: 'Quick and solid, great salsa bar.',
-    tags: ['quick_lunch', 'solo'],
-    photoUrl: 'https://picsum.photos/seed/taco-bravo/400/300',
+    tags: ['quick_lunch'],
+    photoUrl: dishPhoto('1551504734-5ee1c4a1479b'),
     createdAt: '2026-06-15T12:10:00.000Z',
   },
   {
@@ -37,7 +41,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 5,
     notes: 'Perfect spot for a celebration dinner.',
     tags: ['group', 'special_occasion'],
-    photoUrl: 'https://picsum.photos/seed/garden-table/400/300',
+    photoUrl: dishPhoto('1512621776951-a57141f2eefd'),
     createdAt: '2026-06-10T20:05:00.000Z',
   },
   {
@@ -47,8 +51,8 @@ export const mockEntries: RestaurantEntry[] = [
     dishes: [{ id: 'd6', name: 'Tonkotsu Ramen', notes: 'extra chashu' }],
     rating: 4,
     notes: 'Rich broth, a bit salty by the end.',
-    tags: ['solo', 'quick_lunch'],
-    photoUrl: 'https://picsum.photos/seed/ramen-den/400/300',
+    tags: ['quick_lunch'],
+    photoUrl: dishPhoto('1557872943-16a5ac26437e'),
     createdAt: '2026-06-05T13:20:00.000Z',
   },
   {
@@ -59,7 +63,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 3,
     notes: 'Good but pricey, service was slow.',
     tags: ['business'],
-    photoUrl: 'https://picsum.photos/seed/bistro-22/400/300',
+    photoUrl: dishPhoto('1558030006-450675393462'),
     createdAt: '2026-05-28T19:00:00.000Z',
   },
   {
@@ -73,7 +77,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 4,
     notes: 'Great weekend brunch spot with the kids.',
     tags: ['family'],
-    photoUrl: 'https://picsum.photos/seed/sunny-side/400/300',
+    photoUrl: dishPhoto('1525351484163-7529414344d8'),
     createdAt: '2026-05-22T10:15:00.000Z',
   },
   {
@@ -84,6 +88,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 3,
     notes: 'Decent, nothing special.',
     tags: ['quick_lunch'],
+    photoUrl: dishPhoto('1525755662778-989d0524087e'),
     createdAt: '2026-05-18T18:40:00.000Z',
   },
   {
@@ -96,7 +101,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 5,
     notes: 'Incredible omakase, worth every penny. Book ahead.',
     tags: ['date_night', 'special_occasion'],
-    photoUrl: 'https://picsum.photos/seed/sakura-sushi/400/300',
+    photoUrl: dishPhoto('1579871494447-9811cf80d66c'),
     createdAt: '2026-05-10T20:30:00.000Z',
   },
   {
@@ -107,7 +112,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 4,
     notes: 'Reliable go-to for a quick group lunch.',
     tags: ['group', 'quick_lunch'],
-    photoUrl: 'https://picsum.photos/seed/burger-joint/400/300',
+    photoUrl: dishPhoto('1568901346375-23c9450c58cd'),
     createdAt: '2026-05-02T12:50:00.000Z',
   },
   {
@@ -121,7 +126,7 @@ export const mockEntries: RestaurantEntry[] = [
     rating: 5,
     notes: 'Cozy, romantic, perfect anniversary dinner.',
     tags: ['date_night', 'special_occasion'],
-    photoUrl: 'https://picsum.photos/seed/petit-marche/400/300',
+    photoUrl: dishPhoto('1414235077428-338989a2e8c0'),
     createdAt: '2026-04-25T19:45:00.000Z',
   },
 ]

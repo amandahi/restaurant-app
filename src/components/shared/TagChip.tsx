@@ -10,7 +10,7 @@ interface TagChipProps {
 export function TagChip({ tag, selected = false, onClick }: TagChipProps) {
   const label = VISIT_TAG_LABELS[tag]
   const className = `inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors ${
-    selected ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700'
+    selected ? 'bg-[var(--accent)] text-white' : 'bg-stone-100 text-stone-600'
   }`
 
   if (!onClick) {

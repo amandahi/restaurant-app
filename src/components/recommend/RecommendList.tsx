@@ -29,19 +29,19 @@ export function RecommendList({ entries }: RecommendListProps) {
   }
 
   return (
-    <div className="divide-y divide-gray-100">
+    <div className="divide-y divide-stone-100">
       {entries.map((entry) => (
         <div key={entry.id} className="flex items-center gap-3 px-4 py-3">
           <Link to={`/entry/${entry.id}`} className="min-w-0 flex-1 touch-manipulation">
-            <p className="truncate font-semibold text-gray-900">{entry.restaurantName}</p>
+            <p className="truncate font-semibold text-stone-900">{entry.restaurantName}</p>
             <StarRating rating={entry.rating} size={14} />
-            <p className="mt-0.5 truncate text-sm text-gray-500">{formatVisitDate(entry.visitDate)}</p>
+            <p className="mt-0.5 truncate text-sm text-stone-500">{formatVisitDate(entry.visitDate)}</p>
           </Link>
           <button
             type="button"
             onClick={() => handleShare(entry)}
             aria-label={`Share ${entry.restaurantName}`}
-            className="shrink-0 rounded-full p-2 text-gray-500 touch-manipulation"
+            className="shrink-0 rounded-full p-2 text-stone-500 touch-manipulation"
           >
             <Share2 size={20} />
           </button>

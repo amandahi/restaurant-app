@@ -22,58 +22,58 @@ export function AddEntryForm() {
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Restaurant name</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Restaurant name</label>
         <input
           type="text"
           value={form.restaurantName}
           onChange={(e) => form.setRestaurantName(e.target.value)}
           placeholder="e.g. Nonna Rosa"
           required
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
         />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Date</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Date</label>
         <input
           type="date"
           value={form.visitDate}
           onChange={(e) => form.setVisitDate(e.target.value)}
           required
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
         />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Rating</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Rating</label>
         <StarRating rating={form.rating} readOnly={false} onChange={form.setRating} size={28} />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Dishes</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Dishes</label>
         <DishListInput dishes={form.dishes} onAdd={form.addDish} onRemove={form.removeDish} />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Tags</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Tags</label>
         <TagSelector selected={form.tags} onToggle={form.toggleTag} />
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">Notes</label>
+        <label className="mb-1 block text-sm font-medium text-stone-700">Notes</label>
         <textarea
           value={form.notes}
           onChange={(e) => form.setNotes(e.target.value)}
           rows={3}
           placeholder="What stood out?"
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
         />
       </div>
 
       <button
         type="submit"
         disabled={!form.isValid || form.submitting}
-        className="w-full rounded-xl bg-orange-500 py-3 text-base font-semibold text-white touch-manipulation disabled:opacity-50"
+        className="w-full rounded-xl bg-[var(--accent)] py-3 text-base font-semibold text-white touch-manipulation disabled:opacity-50"
       >
         {form.submitting ? 'Saving...' : 'Save Visit'}
       </button>

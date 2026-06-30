@@ -2,7 +2,6 @@ export type VisitTag =
   | 'date_night'
   | 'group'
   | 'quick_lunch'
-  | 'solo'
   | 'special_occasion'
   | 'business'
   | 'family'
@@ -11,7 +10,6 @@ export const VISIT_TAGS: VisitTag[] = [
   'date_night',
   'group',
   'quick_lunch',
-  'solo',
   'special_occasion',
   'business',
   'family',
@@ -21,7 +19,6 @@ export const VISIT_TAG_LABELS: Record<VisitTag, string> = {
   date_night: 'Date Night',
   group: 'Group',
   quick_lunch: 'Quick Lunch',
-  solo: 'Solo',
   special_occasion: 'Special Occasion',
   business: 'Business',
   family: 'Family',

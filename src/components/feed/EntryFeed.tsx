@@ -17,7 +17,7 @@ export function EntryFeed({ entries, loading }: EntryFeedProps) {
   }
 
   return (
-    <div className="divide-y divide-gray-100">
+    <div className="divide-y divide-stone-100">
       {entries.map((entry) => (
         <EntryCard key={entry.id} entry={entry} />
       ))}

@@ -21,14 +21,14 @@ export function SearchFilterBar({
 }: SearchFilterBarProps) {
   return (
     <div className="space-y-3 px-4 pb-3 pt-3">
-      <div className="flex items-center gap-2 rounded-xl bg-gray-100 px-3 py-2">
-        <Search size={18} className="text-gray-400" />
+      <div className="flex items-center gap-2 rounded-xl bg-stone-100 px-3 py-2">
+        <Search size={18} className="text-stone-400" />
         <input
           type="text"
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder="Search restaurants..."
-          className="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
+          className="w-full bg-transparent text-sm outline-none placeholder:text-stone-400"
         />
       </div>
       <div className="flex flex-wrap gap-2">
@@ -37,14 +37,14 @@ export function SearchFilterBar({
         ))}
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-500">Min rating</span>
+        <span className="text-sm text-stone-500">Min rating</span>
         {[0, 3, 4, 5].map((value) => (
           <button
             key={value}
             type="button"
             onClick={() => onMinRatingChange(value)}
             className={`rounded-full px-3 py-1 text-sm font-medium touch-manipulation ${
-              minRating === value ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-700'
+              minRating === value ? 'bg-[var(--accent)] text-white' : 'bg-stone-100 text-stone-600'
             }`}
           >
             {value === 0 ? 'Any' : `${value}+`}

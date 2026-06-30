@@ -19,7 +19,7 @@ export function StarRating({ rating, readOnly = true, onChange, size = 18 }: Sta
             <Star
               key={star}
               size={size}
-              className={filled ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}
+              className={filled ? 'fill-[var(--star)] text-[var(--star)]' : 'text-stone-300'}
             />
           )
         }
@@ -34,7 +34,7 @@ export function StarRating({ rating, readOnly = true, onChange, size = 18 }: Sta
           >
             <Star
               size={size}
-              className={filled ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}
+              className={filled ? 'fill-[var(--star)] text-[var(--star)]' : 'text-stone-300'}
             />
           </button>
         )
