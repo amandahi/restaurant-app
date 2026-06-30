@@ -8,7 +8,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-stone-200 bg-white/95 backdrop-blur pb-[env(safe-area-inset-bottom)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-stone-200 bg-white/95 backdrop-blur pb-[env(safe-area-inset-bottom)] md:hidden">
       <div className="mx-auto flex max-w-md items-center">
         <NavLink to="/" end className={linkClass}>
           <UtensilsCrossed size={22} />

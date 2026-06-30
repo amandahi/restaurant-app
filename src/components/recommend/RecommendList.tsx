@@ -29,9 +29,12 @@ export function RecommendList({ entries }: RecommendListProps) {
   }
 
   return (
-    <div className="divide-y divide-stone-100">
+    <div className="divide-y divide-stone-100 md:grid md:grid-cols-2 md:gap-4 md:divide-y-0 lg:grid-cols-3">
       {entries.map((entry) => (
-        <div key={entry.id} className="flex items-center gap-3 px-4 py-3">
+        <div
+          key={entry.id}
+          className="flex items-center gap-3 px-4 py-3 md:rounded-xl md:border md:border-stone-200 md:px-4 md:py-3"
+        >
           <Link to={`/entry/${entry.id}`} className="min-w-0 flex-1 touch-manipulation">
             <p className="truncate font-semibold text-stone-900">{entry.restaurantName}</p>
             <StarRating rating={entry.rating} size={14} />

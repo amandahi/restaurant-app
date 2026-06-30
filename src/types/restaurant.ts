@@ -37,6 +37,7 @@ export interface RestaurantEntry {
   dishes: Dish[]
   rating: 1 | 2 | 3 | 4 | 5
   notes?: string
+  fullReview?: string
   tags: VisitTag[]
   photoUrl?: string
   createdAt: string

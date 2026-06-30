@@ -12,6 +12,7 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
   const [dishes, setDishes] = useState<Dish[]>([])
   const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(5)
   const [notes, setNotes] = useState('')
+  const [fullReview, setFullReview] = useState('')
   const [tags, setTags] = useState<VisitTag[]>([])
   const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined)
   const [submitting, setSubmitting] = useState(false)
@@ -46,6 +47,7 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
         dishes,
         rating,
         notes: notes.trim() || undefined,
+        fullReview: fullReview.trim() || undefined,
         tags,
         photoUrl,
       })
@@ -68,6 +70,8 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
     setRating,
     notes,
     setNotes,
+    fullReview,
+    setFullReview,
     tags,
     toggleTag,
     photoUrl,
