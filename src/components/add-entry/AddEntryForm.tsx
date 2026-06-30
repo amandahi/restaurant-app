@@ -1,0 +1,82 @@
+import { useNavigate } from 'react-router-dom'
+import { useEntryForm } from '../../hooks/useEntryForm'
+import { StarRating } from '../shared/StarRating'
+import { DishListInput } from './DishListInput'
+import { PhotoPicker } from './PhotoPicker'
+import { TagSelector } from './TagSelector'
+
+export function AddEntryForm() {
+  const navigate = useNavigate()
+  const form = useEntryForm(() => navigate('/'))
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        form.submit()
+      }}
+      className="space-y-5 px-4 py-4"
+    >
+      <div className="flex justify-center">
+        <PhotoPicker photoUrl={form.photoUrl} onChange={form.setPhoto} />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Restaurant name</label>
+        <input
+          type="text"
+          value={form.restaurantName}
+          onChange={(e) => form.setRestaurantName(e.target.value)}
+          placeholder="e.g. Nonna Rosa"
+          required
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+        />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Date</label>
+        <input
+          type="date"
+          value={form.visitDate}
+          onChange={(e) => form.setVisitDate(e.target.value)}
+          required
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+        />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Rating</label>
+        <StarRating rating={form.rating} readOnly={false} onChange={form.setRating} size={28} />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Dishes</label>
+        <DishListInput dishes={form.dishes} onAdd={form.addDish} onRemove={form.removeDish} />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Tags</label>
+        <TagSelector selected={form.tags} onToggle={form.toggleTag} />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Notes</label>
+        <textarea
+          value={form.notes}
+          onChange={(e) => form.setNotes(e.target.value)}
+          rows={3}
+          placeholder="What stood out?"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-orange-400"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={!form.isValid || form.submitting}
+        className="w-full rounded-xl bg-orange-500 py-3 text-base font-semibold text-white touch-manipulation disabled:opacity-50"
+      >
+        {form.submitting ? 'Saving...' : 'Save Visit'}
+      </button>
+    </form>
+  )
+}
