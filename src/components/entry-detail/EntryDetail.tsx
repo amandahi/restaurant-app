@@ -1,5 +1,6 @@
 import type { RestaurantEntry } from '../../types/restaurant'
 import { formatVisitDate } from '../../utils/date'
+import { GiphyAttribution } from '../shared/GiphyAttribution'
 import { StarRating } from '../shared/StarRating'
 import { TagChip } from '../shared/TagChip'
 
@@ -60,6 +61,13 @@ export function EntryDetail({ entry }: EntryDetailProps) {
             <p className="max-w-2xl whitespace-pre-line text-sm leading-relaxed text-stone-600">
               {entry.fullReview}
             </p>
+          </div>
+        )}
+
+        {entry.gif && (
+          <div>
+            <img src={entry.gif.url} alt={entry.gif.title ?? 'Attached GIF'} className="max-w-xs rounded-xl" />
+            <GiphyAttribution className="mt-1" />
           </div>
         )}
       </div>

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@giphy/js-types": "^5.1.0",
+    "@giphy/react-components": "^10.1.2",
     "@supabase/supabase-js": "^2.110.0",
     "lucide-react": "^1.22.0",
     "react": "^19.2.7",

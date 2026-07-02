@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { PHOTOS_BUCKET, supabase } from '../lib/supabaseClient'
 import { restaurantService } from '../services/restaurantService'
-import type { Dish, RestaurantEntry, VisitTag } from '../types/restaurant'
+import type { Dish, GifAttachment, RestaurantEntry, VisitTag } from '../types/restaurant'
 
 function today(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
 async function uploadPhoto(file: File): Promise<string> {
-  const path = `${crypto.randomUUID()}-${file.name}`
+  const extension = file.name.split('.').pop()?.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const path = extension ? `${crypto.randomUUID()}.${extension}` : crypto.randomUUID()
   const { error } = await supabase.storage.from(PHOTOS_BUCKET).upload(path, file)
   if (error) throw error
   const { data } = supabase.storage.from(PHOTOS_BUCKET).getPublicUrl(path)
@@ -25,7 +26,9 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
   const [tags, setTags] = useState<VisitTag[]>([])
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | undefined>(undefined)
+  const [gif, setGif] = useState<GifAttachment | undefined>(undefined)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   function addDish(name: string) {
     if (!name.trim()) return
@@ -51,6 +54,7 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
   async function submit(): Promise<RestaurantEntry | null> {
     if (!isValid) return null
     setSubmitting(true)
+    setError(null)
     try {
       const photoUrl = photoFile ? await uploadPhoto(photoFile) : undefined
       const entry = await restaurantService.create({
@@ -62,9 +66,13 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
         fullReview: fullReview.trim() || undefined,
         tags,
         photoUrl,
+        gif,
       })
       onSaved?.(entry)
       return entry
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save visit')
+      return null
     } finally {
       setSubmitting(false)
     }
@@ -88,8 +96,11 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
     toggleTag,
     photoUrl: photoPreviewUrl,
     setPhoto,
+    gif,
+    setGif,
     isValid,
     submitting,
+    error,
     submit,
   }
 }

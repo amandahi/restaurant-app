@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEntryForm } from '../../hooks/useEntryForm'
 import { StarRating } from '../shared/StarRating'
 import { DishListInput } from './DishListInput'
+import { GifPicker } from './GifPicker'
 import { PhotoPicker } from './PhotoPicker'
 import { TagSelector } from './TagSelector'
 
@@ -86,6 +87,13 @@ export function AddEntryForm() {
           </div>
         </div>
       </div>
+
+      <div className="mt-5">
+        <label className="mb-1 block text-sm font-medium text-stone-700">GIF</label>
+        <GifPicker gif={form.gif} onChange={form.setGif} />
+      </div>
+
+      {form.error && <p className="mt-3 text-sm text-red-600">{form.error}</p>}
 
       <button
         type="submit"

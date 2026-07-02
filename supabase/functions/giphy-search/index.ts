@@ -45,7 +45,7 @@ Deno.serve(async (req: Request) => {
     images: gif.images,
   }));
 
-  return new Response(JSON.stringify({ data, pagination: giphyJson.pagination }), {
+  return new Response(JSON.stringify({ data, pagination: giphyJson.pagination, meta: giphyJson.meta }), {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 });
