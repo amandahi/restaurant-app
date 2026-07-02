@@ -30,6 +30,15 @@ export interface Dish {
   notes?: string
 }
 
+export interface GifAttachment {
+  id: string
+  url: string
+  stillUrl: string
+  width: number
+  height: number
+  title?: string
+}
+
 export interface RestaurantEntry {
   id: string
   restaurantName: string
@@ -40,6 +49,7 @@ export interface RestaurantEntry {
   fullReview?: string
   tags: VisitTag[]
   photoUrl?: string
+  gif?: GifAttachment
   createdAt: string
   updatedAt?: string
 }

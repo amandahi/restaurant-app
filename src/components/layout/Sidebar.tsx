@@ -1,5 +1,6 @@
-import { Plus, Star, UtensilsCrossed } from 'lucide-react'
+import { LogOut, Plus, Star, UtensilsCrossed } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../lib/AuthContext'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
@@ -7,6 +8,8 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
   }`
 
 export function Sidebar() {
+  const { user, signOut } = useAuth()
+
   return (
     <aside className="hidden shrink-0 border-r border-stone-200 bg-white md:flex md:w-64 md:flex-col md:py-6">
       <div className="px-6 pb-6">
@@ -23,7 +26,7 @@ export function Sidebar() {
           Recommend
         </NavLink>
       </nav>
-      <div className="mt-auto px-3">
+      <div className="mt-auto space-y-3 px-3">
         <NavLink
           to="/add"
           className="flex items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-3 py-2.5 text-sm font-semibold text-white shadow-sm"
@@ -31,6 +34,16 @@ export function Sidebar() {
           <Plus size={18} />
           Log a Visit
         </NavLink>
+        {user && (
+          <button
+            type="button"
+            onClick={() => signOut()}
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-stone-500 hover:bg-stone-50"
+          >
+            <LogOut size={16} />
+            <span className="truncate">{user.email}</span>
+          </button>
+        )}
       </div>
     </aside>
   )

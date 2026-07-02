@@ -1,4 +1,6 @@
+import { LogOut } from 'lucide-react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { useAuth } from '../../lib/AuthContext'
 import { BottomNav } from './BottomNav'
 import { Sidebar } from './Sidebar'
 
@@ -10,14 +12,18 @@ const TITLES: Record<string, string> = {
 
 export function AppShell() {
   const location = useLocation()
+  const { signOut } = useAuth()
   const title = TITLES[location.pathname] ?? 'Restaurant Journal'
 
   return (
     <div className="flex min-h-svh flex-col bg-white md:flex-row md:bg-stone-50">
       <Sidebar />
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col bg-white md:max-w-none md:px-10 md:py-8">
-        <header className="sticky top-0 z-10 border-b border-stone-100 bg-white/95 px-4 py-3 backdrop-blur md:hidden">
+        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-100 bg-white/95 px-4 py-3 backdrop-blur md:hidden">
           <h1 className="text-lg font-semibold text-stone-900">{title}</h1>
+          <button type="button" onClick={() => signOut()} aria-label="Sign out" className="p-1 text-stone-400">
+            <LogOut size={18} />
+          </button>
         </header>
         <header className="hidden md:mb-6 md:block">
           <h1 className="text-2xl font-semibold text-stone-900">{title}</h1>

@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient'
-import type { Dish, NewRestaurantEntry, RestaurantEntry, VisitTag } from '../types/restaurant'
+import type { Dish, GifAttachment, NewRestaurantEntry, RestaurantEntry, VisitTag } from '../types/restaurant'
 
 interface RestaurantEntryRow {
   id: string
@@ -11,6 +11,7 @@ interface RestaurantEntryRow {
   full_review: string | null
   tags: VisitTag[]
   photo_url: string | null
+  gif: GifAttachment | null
   created_at: string
   updated_at: string | null
 }
@@ -26,6 +27,7 @@ function toEntry(row: RestaurantEntryRow): RestaurantEntry {
     fullReview: row.full_review ?? undefined,
     tags: row.tags,
     photoUrl: row.photo_url ?? undefined,
+    gif: row.gif ?? undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at ?? undefined,
   }
@@ -54,9 +56,14 @@ export const restaurantService = {
   },
 
   async create(newEntry: NewRestaurantEntry): Promise<RestaurantEntry> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
     const { data, error } = await supabase
       .from('restaurant_entries')
       .insert({
+        user_id: user?.id,
         restaurant_name: newEntry.restaurantName,
         visit_date: newEntry.visitDate,
         dishes: newEntry.dishes,
@@ -65,6 +72,7 @@ export const restaurantService = {
         full_review: newEntry.fullReview ?? null,
         tags: newEntry.tags,
         photo_url: newEntry.photoUrl ?? null,
+        gif: newEntry.gif ?? null,
       })
       .select()
       .single()
