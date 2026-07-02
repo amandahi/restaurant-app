@@ -18,17 +18,14 @@ supabase db push
 git push origin main
 ```
 
-## 3. Deploy to Vercel
+## 3. Vercel deploys automatically
 
-Vercel's GitHub integration isn't connected yet (it requires a one-time GitHub login
-connection in the Vercel dashboard: Project Settings → Git → Connect Git Repository).
-Until that's set up, deploy manually from this directory:
+Vercel's GitHub integration is connected to `amandahi/restaurant-app`, so the push in
+step 2 alone triggers a production build and deploy to `https://claude-demo-theta.vercel.app`.
+No manual step needed.
 
-```
-vercel --prod
-```
-
-This builds and promotes to `https://claude-demo-theta.vercel.app`.
+If you ever need to deploy without a new commit (e.g. a pure env var change), you can still
+run `vercel --prod` manually from this directory.
 
 ## 4. Verify
 
