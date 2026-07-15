@@ -16,17 +16,17 @@ async function uploadPhoto(file: File): Promise<string> {
   return data.publicUrl
 }
 
-export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
-  const [restaurantName, setRestaurantName] = useState('')
-  const [visitDate, setVisitDate] = useState(today())
-  const [dishes, setDishes] = useState<Dish[]>([])
-  const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(5)
-  const [notes, setNotes] = useState('')
-  const [fullReview, setFullReview] = useState('')
-  const [tags, setTags] = useState<VisitTag[]>([])
+export function useEntryForm(existingEntry?: RestaurantEntry, onSaved?: (entry: RestaurantEntry) => void) {
+  const [restaurantName, setRestaurantName] = useState(existingEntry?.restaurantName ?? '')
+  const [visitDate, setVisitDate] = useState(existingEntry?.visitDate ?? today())
+  const [dishes, setDishes] = useState<Dish[]>(existingEntry?.dishes ?? [])
+  const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(existingEntry?.rating ?? 5)
+  const [notes, setNotes] = useState(existingEntry?.notes ?? '')
+  const [fullReview, setFullReview] = useState(existingEntry?.fullReview ?? '')
+  const [tags, setTags] = useState<VisitTag[]>(existingEntry?.tags ?? [])
   const [photoFile, setPhotoFile] = useState<File | null>(null)
-  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | undefined>(undefined)
-  const [gif, setGif] = useState<GifAttachment | undefined>(undefined)
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | undefined>(existingEntry?.photoUrl)
+  const [gif, setGif] = useState<GifAttachment | undefined>(existingEntry?.gif)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -56,8 +56,8 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
     setSubmitting(true)
     setError(null)
     try {
-      const photoUrl = photoFile ? await uploadPhoto(photoFile) : undefined
-      const entry = await restaurantService.create({
+      const photoUrl = photoFile ? await uploadPhoto(photoFile) : existingEntry?.photoUrl
+      const payload = {
         restaurantName: restaurantName.trim(),
         visitDate,
         dishes,
@@ -67,7 +67,10 @@ export function useEntryForm(onSaved?: (entry: RestaurantEntry) => void) {
         tags,
         photoUrl,
         gif,
-      })
+      }
+      const entry = existingEntry
+        ? await restaurantService.update(existingEntry.id, payload)
+        : await restaurantService.create(payload)
       onSaved?.(entry)
       return entry
     } catch (err) {

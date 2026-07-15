@@ -37,13 +37,13 @@ pages/ + components/  →  hooks/  →  services/restaurantService.ts  →  lib/
 ```
 
 - **`services/restaurantService.ts`** is the single gateway to the `restaurant_entries` table. It owns the mapping between the snake_case DB row (`RestaurantEntryRow`) and the camelCase domain type (`RestaurantEntry`) via `toEntry()`. When adding a column, update the SQL migration, `RestaurantEntryRow`, `toEntry()`, the insert in `create()`, and the `RestaurantEntry`/`NewRestaurantEntry` types in `types/restaurant.ts` together.
-- **`hooks/`** wrap the service in React state: `useRestaurantEntries` (list/search with loading/error/refresh), `useRestaurantEntry` (single entry), `useEntryForm` (the entire add-entry form state, validation, photo upload, and submit). Prefer extending these hooks over calling the service from a component.
+- **`hooks/`** wrap the service in React state: `useRestaurantEntries` (list/search with loading/error/refresh), `useRestaurantEntry` (single entry), `useEntryForm` (the entire add/edit entry form state, validation, photo upload, and submit — pass an existing `RestaurantEntry` to seed it in edit mode). Prefer extending these hooks over calling the service from a component.
 - **Exceptions that bypass the service** and use `supabaseClient` directly: photo uploads to Storage (`useEntryForm.ts` → `uploadPhoto`, bucket `restaurant-photos`), GIF search (`GifPicker.tsx` → `supabase.functions.invoke('giphy-search')`), and all auth (`lib/AuthContext.tsx`).
 
 ### Auth & routing
 
-- `lib/AuthContext.tsx` provides `useAuth()` — email OTP / magic-link sign-in (`signInWithOtp`), session state, `signOut`. No passwords.
-- `App.tsx` defines routes: `/login` is public; everything else is wrapped in `RequireAuth` (redirects to `/login`) inside `AppShell` (nav chrome). Pages: `FeedPage` (index), `AddEntryPage` (`/add`), `EntryDetailPage` (`/entry/:id`), `RecommendPage` (`/recommend`).
+- `lib/AuthContext.tsx` provides `useAuth()` — email + password sign-in/sign-up (`signInWithPassword`, `signUp`), session state, `signOut`.
+- `App.tsx` defines routes: `/login` is public; everything else is wrapped in `RequireAuth` (redirects to `/login`) inside `AppShell` (nav chrome). Pages: `FeedPage` (index), `AddEntryPage` (`/add`), `EntryDetailPage` (`/entry/:id`), `EditEntryPage` (`/entry/:id/edit`), `RecommendPage` (`/recommend`).
 
 ### Row-level security (important)
 

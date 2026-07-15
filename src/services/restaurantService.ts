@@ -80,6 +80,32 @@ export const restaurantService = {
     return toEntry(data as RestaurantEntryRow)
   },
 
+  async update(id: string, entry: NewRestaurantEntry): Promise<RestaurantEntry> {
+    const { data, error } = await supabase
+      .from('restaurant_entries')
+      .update({
+        restaurant_name: entry.restaurantName,
+        visit_date: entry.visitDate,
+        dishes: entry.dishes,
+        rating: entry.rating,
+        notes: entry.notes ?? null,
+        full_review: entry.fullReview ?? null,
+        tags: entry.tags,
+        photo_url: entry.photoUrl ?? null,
+        gif: entry.gif ?? null,
+      })
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) throw error
+    return toEntry(data as RestaurantEntryRow)
+  },
+
+  async delete(id: string): Promise<void> {
+    const { error } = await supabase.from('restaurant_entries').delete().eq('id', id)
+    if (error) throw error
+  },
+
   async search(filters: SearchFilters): Promise<RestaurantEntry[]> {
     let queryBuilder = supabase.from('restaurant_entries').select('*').order('visit_date', { ascending: false })
 

@@ -19,7 +19,9 @@ export function EntryCard({ entry }: EntryCardProps) {
       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-stone-100 md:h-40 md:w-full md:rounded-none">
         {entry.photoUrl ? (
           <img src={entry.photoUrl} alt={entry.restaurantName} className="h-full w-full object-cover" />
-        ) : null}
+        ) : (
+          <img src="/fallback-dish.svg" alt="" className="h-full w-full object-cover" />
+        )}
         {entry.gif && (
           <span className="absolute bottom-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-stone-900/70 text-white">
             <Film size={12} />

@@ -1,14 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import { useEntryForm } from '../../hooks/useEntryForm'
+import type { RestaurantEntry } from '../../types/restaurant'
 import { StarRating } from '../shared/StarRating'
 import { DishListInput } from './DishListInput'
 import { GifPicker } from './GifPicker'
 import { PhotoPicker } from './PhotoPicker'
 import { TagSelector } from './TagSelector'
 
-export function AddEntryForm() {
+interface EntryFormProps {
+  entry?: RestaurantEntry
+}
+
+export function EntryForm({ entry }: EntryFormProps) {
   const navigate = useNavigate()
-  const form = useEntryForm(() => navigate('/'))
+  const form = useEntryForm(entry, (saved) => navigate(entry ? `/entry/${saved.id}` : '/'))
 
   return (
     <form
@@ -100,7 +105,7 @@ export function AddEntryForm() {
         disabled={!form.isValid || form.submitting}
         className="mt-5 w-full rounded-xl bg-[var(--accent)] py-3 text-base font-semibold text-white touch-manipulation disabled:opacity-50 md:mt-8 md:w-auto md:px-10"
       >
-        {form.submitting ? 'Saving...' : 'Save Visit'}
+        {form.submitting ? 'Saving...' : entry ? 'Save Changes' : 'Save Visit'}
       </button>
     </form>
   )

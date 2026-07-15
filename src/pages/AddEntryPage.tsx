@@ -1,5 +1,5 @@
-import { AddEntryForm } from '../components/add-entry/AddEntryForm'
+import { EntryForm } from '../components/add-entry/EntryForm'
 
 export function AddEntryPage() {
-  return <AddEntryForm />
+  return <EntryForm />
 }

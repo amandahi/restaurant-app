@@ -1,3 +1,6 @@
+import { Pencil, Trash2 } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { restaurantService } from '../../services/restaurantService'
 import type { RestaurantEntry } from '../../types/restaurant'
 import { formatVisitDate } from '../../utils/date'
 import { GiphyAttribution } from '../shared/GiphyAttribution'
@@ -9,6 +12,14 @@ interface EntryDetailProps {
 }
 
 export function EntryDetail({ entry }: EntryDetailProps) {
+  const navigate = useNavigate()
+
+  async function handleDelete() {
+    if (!window.confirm('Delete this visit?')) return
+    await restaurantService.delete(entry.id)
+    navigate('/')
+  }
+
   return (
     <div className="md:flex md:items-start md:gap-10">
       {entry.photoUrl && (
@@ -19,9 +30,28 @@ export function EntryDetail({ entry }: EntryDetailProps) {
         />
       )}
       <div className="space-y-4 px-4 py-4 md:flex-1 md:px-0 md:py-0">
-        <div>
-          <h2 className="text-xl font-semibold text-stone-900 md:text-2xl">{entry.restaurantName}</h2>
-          <p className="text-sm text-stone-400">{formatVisitDate(entry.visitDate)}</p>
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <h2 className="text-xl font-semibold text-stone-900 md:text-2xl">{entry.restaurantName}</h2>
+            <p className="text-sm text-stone-400">{formatVisitDate(entry.visitDate)}</p>
+          </div>
+          <div className="flex shrink-0 gap-2">
+            <Link
+              to={`/entry/${entry.id}/edit`}
+              className="rounded-lg border border-stone-200 p-2 text-stone-500 hover:text-stone-900"
+              aria-label="Edit visit"
+            >
+              <Pencil size={16} />
+            </Link>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="rounded-lg border border-stone-200 p-2 text-stone-500 hover:text-red-600"
+              aria-label="Delete visit"
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
         </div>
 
         <StarRating rating={entry.rating} size={22} />
